@@ -420,5 +420,10 @@ public class V201909JsonSchemaTest {
         runTestFile("draft2019-09/uniqueItems.json");
     }
 
+    @Test
+    public void testPersonExampleSchema() throws Exception {
+        runTestFile("draft2019-09/Person.json");
+    }
+
 }
     

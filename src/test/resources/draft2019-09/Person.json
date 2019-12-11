@@ -1,0 +1,73 @@
+[
+  {
+    "description": "remote ref",
+    "schema": {
+      "$schema": "https://json-schema.org/draft/2019-09/schema",
+      "title": "Person",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "image": {
+          "type": "string",
+          "format": "uri"
+        },
+        "email": {
+          "type": "string",
+          "format": "email"
+        },
+        "birthDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "birthPlace": {
+          "$ref": "Place.json"
+        },
+        "deathDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "deathPlace": {
+          "$ref": "Place.json"
+        },
+        "address": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "$ref": "Place.json#/definitions/PostalAddress"
+            }
+          ]
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "additionalProperties": false
+    },
+    "tests": [
+      {
+        "description": "remote ref valid",
+        "data": {
+          "name": "Willy Wonka",
+          "url": "https://chocolatefactory.example.com"
+        },
+        "valid": true
+      },
+      {
+        "description": "remote ref invalid",
+        "data": "a",
+        "valid": false
+      }
+    ]
+  }
+]
