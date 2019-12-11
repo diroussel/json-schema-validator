@@ -23,6 +23,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.networknt.schema.uri.HttpsAgnosticUriComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -264,7 +265,19 @@ public class JsonSchemaFactory {
         final String uri = uriNode == null || uriNode.isNull() ? defaultMetaSchemaURI: uriNode.textValue();
         final JsonMetaSchema jsonMetaSchema = jsonMetaSchemas.get(uri);
         if (jsonMetaSchema == null) {
-            throw new JsonSchemaException("Unknown Metaschema: " + uri);
+            // we couldn't find an exact string match, but maybe there is an equivilence if we ignore
+            // the '#' at the end, and https vs http
+            HttpsAgnosticUriComparator comparator = new HttpsAgnosticUriComparator();
+            URI fullURI = URI.create(uri);
+            return jsonMetaSchemas.entrySet().stream()
+                    .filter(entry -> {
+                        boolean c = comparator.compare(fullURI, URI.create(entry.getKey())) == 0;
+                        System.out.println("Comparing " + uri + " to " + entry.getKey() + " -> " + c);
+                        return c;
+                    })
+                    .map(Map.Entry::getValue)
+                    .findFirst()
+                    .orElseThrow(() -> new JsonSchemaException("Unknown Metaschema: " + uri));
         }
         return jsonMetaSchema;
     }
