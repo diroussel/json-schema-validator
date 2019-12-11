@@ -272,6 +272,26 @@
                 </executions>
             </plugin>
             <!-- end JACOCO -->
+
+            <!-- Code coverage - Clover -->
+            <!-- To run clover: mvn clean clover:setup test clover:aggregate clover:clover -->
+            <plugin>
+                <groupId>org.openclover</groupId>
+                <artifactId>clover-maven-plugin</artifactId>
+                <version>4.3.1</version>
+                <configuration>
+                    <targetPercentage>75%</targetPercentage>
+
+                    <generatePdf>true</generatePdf>
+                    <generateXml>true</generateXml>
+                    <generateHtml>true</generateHtml>
+                    <generateJson>false</generateJson>
+
+                    <generateHistorical>true</generateHistorical>
+                    <historyDir>${user.home}/.clover/${project.groupId}-${project.artifactId}</historyDir>
+                </configuration>
+            </plugin>
+            <!-- end Clover -->
         </plugins>
     </build>
     <reporting>
