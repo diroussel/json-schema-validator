@@ -270,11 +270,7 @@ public class JsonSchemaFactory {
             HttpsAgnosticUriComparator comparator = new HttpsAgnosticUriComparator();
             URI fullURI = URI.create(uri);
             return jsonMetaSchemas.entrySet().stream()
-                    .filter(entry -> {
-                        boolean c = comparator.compare(fullURI, URI.create(entry.getKey())) == 0;
-                        System.out.println("Comparing " + uri + " to " + entry.getKey() + " -> " + c);
-                        return c;
-                    })
+                    .filter(entry -> comparator.compare(fullURI, URI.create(entry.getKey())) == 0)
                     .map(Map.Entry::getValue)
                     .findFirst()
                     .orElseThrow(() -> new JsonSchemaException("Unknown Metaschema: " + uri));

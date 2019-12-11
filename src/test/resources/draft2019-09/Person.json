@@ -60,7 +60,7 @@
         "data": {
           "name": "Willy Wonka",
           "url": "https://chocolatefactory.example.com"
-          },
+        },
         "valid": true
       },
       {
@@ -212,5 +212,4 @@
       }
     ]
   }
-
 ]
